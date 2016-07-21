@@ -3,6 +3,9 @@ from django.template import loader
 from django.shortcuts import render
 import zipfile, os, io
 import shutil
+from django.db import transaction
+import sys
+from helper.models import Model_Main
 
 
 def index(request):
@@ -10,7 +13,11 @@ def index(request):
     return render(request, 'helper/import.html', context)
 
 def importing(request):
-    
+    """
+        Currently only support sas spk model import, 
+        extracting the model files and then save them to database.
+        In order not to get the performance so bad, need to save the data in memory then commit to database.
+    """
     try:
         # create a directory to store the model files
         model_files_dir = "model_files"
@@ -35,8 +42,17 @@ def importing(request):
                 zip2 = zipfile.ZipFile(inner_zip)
                 for i in zip2.namelist():
                     zip2.extract(i, model_files_dir)
-                
-                    
+        
+        # Save the model files to database
+        files = os.listdir(model_files_dir)     
+        for f in files:
+            with open(model_files_dir + '/' + f, 'r') as s:
+                data = s.read()
+                entry = Model_Main(model_Id='test_model', model_Name=str(request.FILES['model_path']), model_File=data)
+                entry.save()
+                 
+        transaction.commit()      # commit the memory result to database  
+                   
     finally:
         shutil.rmtree(model_files_dir)
             
