@@ -6,7 +6,11 @@ import shutil
 from django.db import transaction
 import sys
 from helper.models import Model_Main
+import uuid
 
+
+BEGIN = string.ascii_letters + '_'
+EN = string.ascii_letters + string.digits +'_'
 
 def index(request):
     context = None
@@ -44,11 +48,12 @@ def importing(request):
                     zip2.extract(i, model_files_dir)
         
         # Save the model files to database
+        uuid = uuid.uuid1()     # id to specify the model
         files = os.listdir(model_files_dir)     
         for f in files:
             with open(model_files_dir + '/' + f, 'r') as s:
                 data = s.read()
-                entry = Model_Main(model_Id='test_model', model_Name=str(request.FILES['model_path']), model_File=data)
+                entry = Model_Main(model_Id=uuid, model_Name=str(request.FILES['model_path']), model_File=data)
                 entry.save()
                  
         transaction.commit()      # commit the memory result to database  
@@ -71,7 +76,6 @@ def searchFile(source, target):
                 inner_zip = io.BytesIO(zip_file.read(file))
                 return searchFile(inner_zip, target)
 
-                
                 
                 
                 
