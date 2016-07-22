@@ -9,8 +9,6 @@ from helper.models import Model_Main
 import uuid
 
 
-BEGIN = string.ascii_letters + '_'
-EN = string.ascii_letters + string.digits +'_'
 
 def index(request):
     context = None
