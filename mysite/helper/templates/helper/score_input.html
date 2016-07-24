@@ -1,3 +1,24 @@
-Score Input Table:	<input type="text" name="s_in" value=""><br><br><br>
-Score Output Table:	<input type="text" name="s_out" value=""><br><br><br>
-<input type="button" name="submit" value="OK">
+<html>
+<head>
+<style>
+table{ border-collapse:collapse; }
+td{ border:#ccc solid 1px; padding:5px; }
+</style>
+</head>
+<body>
+<br>
+<form action="{% url 'scoring' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+	Score Input Table: <input type="file" name="score_input"><br><br>
+	Score Output Table: <input type="file" name="score_output"><br><br>
+	Please select a model:
+	<table border="0" cellspacing="0" cellpadding="0">
+		{% for model in models %}
+			<tr>
+			 <td><input type="radio" name="model_id" value="{{ model.0 }}"></td><td>{{ model.1 }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</form>
+</body>
+</html>

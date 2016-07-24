@@ -46,12 +46,12 @@ def importing(request):
                     zip2.extract(i, model_files_dir)
         
         # Save the model files to database
-        uuid = uuid.uuid1()     # id to specify the model
+        model_uuid = uuid.uuid1()     # id to specify the model
         files = os.listdir(model_files_dir)     
         for f in files:
             with open(model_files_dir + '/' + f, 'r') as s:
                 data = s.read()
-                entry = Model_Main(model_Id=uuid, model_Name=str(request.FILES['model_path']), model_File=data)
+                entry = Model_Main(model_Id=model_uuid, model_Name=str(request.FILES['model_path']), file_Name= str(f), model_File=data)
                 entry.save()
                  
         transaction.commit()      # commit the memory result to database  
