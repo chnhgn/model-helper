@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^score/$', score.index, name='index'),
     url(r'^import/$', model_import.index, name='index'),
     url(r'^importing/$', model_import.importing, name='importing'),
-    url(r'^scoring/$', score.scoring, name='scoring')
+    url(r'^scoring/$', score.scoring, name='scoring'),
+    url(r'^execute/$', score.execute, name='execute')
 ]

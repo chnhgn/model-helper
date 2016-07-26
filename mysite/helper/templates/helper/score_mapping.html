@@ -1,0 +1,39 @@
+<html>
+<head>
+<style>
+table{ border-collapse:collapse; }
+td{ border:#ccc solid 1px; padding:5px; }
+</style>
+</head>
+<body>
+<form action="{% url 'execute' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+	<input type="hidden" name="in_table" value="{{ in_table }}">
+	<table>
+		<thead>
+			<tr style="font-weight:bold;">
+				<td>Model Variables</td><td>Score Input Variables</td>
+			</tr>
+		</thead>
+		{% for pair in initial_mapping %}
+			<tr style= 'font-size: 11.5px;'>
+				<td>{{ pair.0 }}</td>
+				<td>
+					<select id="map_var" name="map_var">
+						{% for var in target_vars %}
+							{% if pair.1 == var %}
+								<option value="{{ var }}" selected>{{ var }}</option>
+							{% else %}
+								<option value="{{ var }}">{{ var }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<br>
+	<span><input type="submit" name="submit" value="Run Score"></span>
+</form>
+</body>
+</html>
