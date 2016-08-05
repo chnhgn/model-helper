@@ -7,4 +7,4 @@ class Model_Main(models.Model):
     model_Name = models.CharField(max_length=30)
     file_Name = models.CharField(max_length=30, default='null')
     model_File = models.TextField()
-    
+    output_prob_var = models.CharField(max_length=30, default='null')

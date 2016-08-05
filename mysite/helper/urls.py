@@ -14,5 +14,7 @@ urlpatterns = [
     url(r'^import/$', model_import.index, name='index'),
     url(r'^importing/$', model_import.importing, name='importing'),
     url(r'^scoring/$', score.scoring, name='scoring'),
-    url(r'^execute/$', score.execute, name='execute')
+    url(r'^execute/$', score.execute, name='execute'),
+    url(r'^modelDetail/$', model_import.detail, name='detail'),
+    url(r'^modifyModel/$', model_import.modify, name='modify')
 ]

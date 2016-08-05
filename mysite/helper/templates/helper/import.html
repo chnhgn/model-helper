@@ -1,6 +1,26 @@
+<html>
+<head>
+<style>
+table{ border-collapse:collapse; }
+td{ border:#ccc solid 1px; padding:5px; }
+</style>
+</head>
+<body>
 <br>
 <form action="{% url 'importing' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 	<input type="file" name="model_path">
 	<input type="submit" name="submit" value="IMPORT">
 </form>
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>No.</td><td>Model Name</td>
+	</tr>
+	{% for model in models %}
+		<tr>
+			<td>{{ forloop.counter }}</td><td><a href="/helper/modelDetail?modelId={{ model.0 }}">{{ model.1 }}</a></td>
+		</tr>
+	{% endfor %}
+</table>
+</body>
+</html>
