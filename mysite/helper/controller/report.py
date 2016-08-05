@@ -39,7 +39,7 @@ def generateLift(request):
             content = f.read()
             execute_code.append(content)
         execute_code.append('ods listing close;')
-        execute_code.append("ods html file='lift_report.html';")    
+        execute_code.append('ods pdf file="lift_report.pdf";')    
         execute_code.append("libname ds '"+os.path.abspath(temp_dir)+"';")
         execute_code.append("%let score_input=ds."+os.path.splitext(os.path.basename(input_ds))[0]+";")
         execute_code.append("%let target="+target+";")
@@ -73,16 +73,13 @@ def generateLift(request):
         os.system('sas taskCode.sas')
         os.chdir('..')
         # load the report file
-        with open(temp_dir + '/lift_report.html', 'r') as f:
-            context = f.read()
+        pdf = open(temp_dir + '/lift_report.pdf', 'rb').read()
             
     finally:
         cursor.close()
         shutil.rmtree(temp_dir)
     
-    return HttpResponse(context)
-    
-    
+    return HttpResponse(pdf, content_type='application/pdf')
     
     
     

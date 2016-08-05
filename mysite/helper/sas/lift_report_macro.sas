@@ -103,7 +103,7 @@
 	/* plot the lift */
 	axis1 order=(1 to 6 by .5) label=(h=1.5 'Lift') length=4in;
 	axis2 order=(0 to 1 by .1) label=(h=1.5 'Depth') length=4in;
-	goptions colors=(blue black red green gold cyan);
+	goptions colors=(blue black red green gold cyan) i=join;
 
 	data _null_;
 		num = symget('model_num');
