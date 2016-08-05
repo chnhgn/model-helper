@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<body>
+	<form action="{% url 'distributeReport' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+		<select name="reportId">
+			<option value="lift">Lift Report</option>
+		</select>
+		<input type="submit" name="submit" value="Next">
+	</form>
+</body>
+</html>

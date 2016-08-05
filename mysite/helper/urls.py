@@ -6,6 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contro
 import score
 import model_import
 import main
+import report
 
 
 urlpatterns = [
@@ -16,5 +17,8 @@ urlpatterns = [
     url(r'^scoring/$', score.scoring, name='scoring'),
     url(r'^execute/$', score.execute, name='execute'),
     url(r'^modelDetail/$', model_import.detail, name='detail'),
-    url(r'^modifyModel/$', model_import.modify, name='modify')
+    url(r'^modifyModel/$', model_import.modify, name='modify'),
+    url(r'^report/$', report.index, name='index'),
+    url(r'^distributeReport/$', report.distributeReport, name='distributeReport'),
+    url(r'^generateLift/$', report.generateLift, name='generateLift')
 ]

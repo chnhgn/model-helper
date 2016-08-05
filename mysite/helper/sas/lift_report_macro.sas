@@ -1,4 +1,3 @@
-
 %macro calc_confusion_matrix(cutoff=,actual=,predict=,score_table=,out_lib=,append=False,model_name=);
 	proc sql noprint;
 		select count(*) into:true_positive from &score_table where &actual = 1 and &predict = '1'; /* 1->1 */
@@ -164,18 +163,3 @@
 
 	filename cm;
 %mend gc;
-
-
-libname ds "C:\scnguh\workspace";
-%let score_input=ds.hmeq_score_input;
-%let target=bad;
-
-%precondition(score_code='C:\\scnguh\\workspace\\reg_score.sas', predict_var=em_classification, event_prob=em_eventprobability);
-%exec(name='reg1');
-
-%precondition(score_code='C:\\scnguh\\workspace\\tree_score.sas', predict_var=em_classification, event_prob=em_eventprobability);
-%exec(name='tree1');
-
-%plot;
-%gc;
-

@@ -57,7 +57,8 @@ def importing(request):
         for f in files:
             with open(model_files_dir + '/' + f, 'r') as s:
                 data = s.read()
-                entry = Model_Main(model_Id=model_uuid, model_Name=str(request.FILES['model_path']), file_Name= str(f), model_File=data)
+                model_name = str(request.FILES['model_path'])
+                entry = Model_Main(model_Id=model_uuid, model_Name=model_name[:model_name.find('.spk')], file_Name= str(f), model_File=data)
                 entry.save()
                  
         transaction.commit()      # commit the memory result to database  

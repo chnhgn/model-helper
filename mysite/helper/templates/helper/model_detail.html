@@ -1,0 +1,54 @@
+<html>
+<head>
+<style>
+table{ border-collapse:collapse; }
+td{ border:#ccc solid 1px; padding:5px; }
+</style>
+</head>
+<body>
+<form action="{% url 'modify' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+	<table border="0">
+		<tr align="center"><td><b>Input Variables</b></td><td><b>Output Variables</b></td></tr>
+		<tr>
+			<td>
+				<table border="0" cellspacing="0" cellpadding="0">
+					{% for input in inputVars %}
+					  <tr>
+						<td>{{ input.0 }}</td><td>{{ input.1 }}</td>
+					  </tr>
+					{% endfor %}
+				</table>
+			</td>
+			<td>
+				<table border="0" cellspacing="0" cellpadding="0">
+					{% for output in outputVars %}
+					  <tr>
+						<td>{{ output.0 }}</td><td>{{ output.1 }}</td>
+					  </tr>
+					{% endfor %}
+				</table>
+			</td>
+		</tr>		
+	</table>
+	<br>
+	<table>
+		<tr align="center"><td><b>Output Event Probability</b></td></tr>
+		<tr><td>
+			<select name="output_event_var">
+				{% for var in outputEventVars %}
+					{% if prob_var == var %}
+						<option value="{{ var }}" selected>{{ var }}</option>
+					{% else %}
+						<option value="{{ var }}">{{ var }}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+		</td></tr>
+		<tr align="center"><td><input type="submit" name="submit" value="Save"></td></tr>
+	</table>
+	<input type="hidden" name="modelId" value="{{ model_id }}">
+	<input type="hidden" name="prob_var" value="{{ prob_var }}">
+</form>
+</body>
+</html>
