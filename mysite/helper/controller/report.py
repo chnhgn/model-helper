@@ -57,7 +57,7 @@ def generateLift(request):
             score_path = os.path.abspath(model_name+'_score.sas')   
             os.chdir('..')
             # code part 2
-            execute_code.append("%precondition(score_code='"+score_path+"', predict_var=%s, event_prob=%s);" % ('em_classification', prob_var))
+            execute_code.append("%precondition(score_code='"+score_path+"', event_prob=%s);" % prob_var)
             execute_code.append("%exec(name='"+model_name+"');") 
         
         # code part 3 

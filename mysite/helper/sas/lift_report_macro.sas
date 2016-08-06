@@ -1,9 +1,9 @@
-%macro calc_confusion_matrix(cutoff=,actual=,predict=,score_table=,out_lib=,append=False,model_name=);
+%macro calc_confusion_matrix(cutoff=,actual=,score_table=,out_lib=,append=False,model_name=);
 	proc sql noprint;
-		select count(*) into:true_positive from &score_table where &actual = 1 and &predict = '1'; /* 1->1 */
-		select count(*) into:false_positive from &score_table where &actual = 0 and &predict = '1'; /* 0->1 */
-		select count(*) into:true_negative from &score_table where &actual = 0 and &predict = '0'; /* 0->0 */
-		select count(*) into:false_negative from &score_table where &actual = 1 and &predict = '0'; /* 1->0 */
+		select count(*) into:true_positive from &score_table where &actual = 1 and predict_var = '1'; /* 1->1 */
+		select count(*) into:false_positive from &score_table where &actual = 0 and predict_var = '1'; /* 0->1 */
+		select count(*) into:true_negative from &score_table where &actual = 0 and predict_var = '0'; /* 0->0 */
+		select count(*) into:false_negative from &score_table where &actual = 1 and predict_var = '0'; /* 1->0 */
 	quit;
 
 	proc sql;
@@ -60,16 +60,16 @@
 		set &score_table;
 		if &prob gt &cut_off then
 		do;
-			predict_&target = '1';
+			predict_var = '1';
 		end;
 		else
 		do;
-			predict_&target = '0';
+			predict_var = '0';
 		end;
 	run;
 %mend tune_score;
 
-%macro precondition(score_code=, predict_var=, event_prob=);
+%macro precondition(score_code=, event_prob=);
 	filename score &score_code;
 	data ds.score_output_temp;
 		set &score_input;
@@ -78,10 +78,11 @@
 	filename score;
 
 	data ds.score_output_temp;
+		length predict_var $8;
 		set ds.score_output_temp;
-		keep &target &predict_var &event_prob;
-		rename &predict_var=predict_&target &event_prob=p_positive;
-		label predict_&target = "predict_&target" p_positive = "p_positive";
+		keep &target &event_prob predict_var;
+		rename &event_prob=p_positive;
+		label p_positive = "p_positive";
 	run;
 	
 %mend precondition;
@@ -90,7 +91,7 @@
 	filename cm catalog "work.sasmacr.source";
 	%do i=0 %to 20;
 		%tune_score(cut_off=%sysevalf(&i/20), score_table=ds.score_output_temp, prob=p_positive);
-		%calc_confusion_matrix(cutoff=%sysevalf(&i/20), actual=&target, predict=predict_&target, score_table=ds.score_output_temp, out_lib=ds, append=True, model_name=&name);
+		%calc_confusion_matrix(cutoff=%sysevalf(&i/20), actual=&target, score_table=ds.score_output_temp, out_lib=ds, append=True, model_name=&name);
 	%end;
 %mend exec;
 
