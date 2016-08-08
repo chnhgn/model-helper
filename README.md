@@ -8,6 +8,8 @@
 	Database used sqlite3
 	
 ## Features
-	Currently only support SAS spk model to import and scoring...
+	Import SAS spk model
+	Scoring SAS model
+	Generate Lift(ROC,Lift and Gain) report for models
 	
 	
