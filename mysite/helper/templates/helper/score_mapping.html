@@ -1,8 +1,27 @@
 <html>
 <head>
-<style>
-table{ border-collapse:collapse; }
-td{ border:#ccc solid 1px; padding:5px; }
+<style type="text/css">
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-right: auto;
+    margin-left: true;
+    width: 600px;
+ }
+ th, td
+ {
+    border: 1px solid #b5d6e6;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    height: 30px;
+ }
+ th
+ {
+    background-color: #D8E7FA;
+ }
 </style>
 </head>
 <body>
@@ -14,11 +33,11 @@ td{ border:#ccc solid 1px; padding:5px; }
 	<table>
 		<thead>
 			<tr style="font-weight:bold;">
-				<td>Output Variables</td><td>Model Variables</td>
+				<th>Output Variables</th><th>Model Variables</th>
 			</tr>
 		</thead>
 		{% for pair in initial_mapping %}
-			<tr style= 'font-size: 11.5px;'>
+			<tr>
 				<td>{{ pair.0 }}<input type="hidden" name="output_var_{{ forloop.counter }}" value="{{ pair.0 }}"></td>
 				<td>
 					<select name="map_var_{{ forloop.counter }}">
@@ -36,7 +55,7 @@ td{ border:#ccc solid 1px; padding:5px; }
 	</table>
 	<br>
 	<input type="hidden" name="pairs_num" value="{{ initial_mapping|length }}">
-	<span><input type="submit" name="submit" value="Run Score"></span>
+	<input type="submit" name="submit" value="Run Score">
 </form>
 </body>
 </html>
