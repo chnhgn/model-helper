@@ -1,20 +1,56 @@
 <html>
 <head>
 <style>
-table{ border-collapse:collapse; }
-td{ border:#ccc solid 1px; padding:5px; }
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-right: auto;
+    margin-left: true;
+    width: 400px;
+ }
+ th, td
+ {
+    border: 1px solid #b5d6e6;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    height: 30px;
+ }
+ th
+ {
+    background-color: #D8E7FA;
+ }  
+.hover
+{
+  background-color: #cccc00;
+}
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script>
+$(document).ready(function () {
+    $("#table1 tr:gt(0)").hover(
+    function () { $(this).addClass("hover") },
+    function () { $(this).removeClass("hover") })
+});
+</script>
 </head>
 <body>
 <br>
 <form action="{% url 'importing' %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
+<div>
 	<input type="file" name="model_path">
-	<input type="submit" name="submit" value="IMPORT">
+	<input type="submit" name="submit" value="Import">
+</div>	
 </form>
-<table border="0" cellspacing="0" cellpadding="0">
+<table id="table1">
 	<tr>
-		<td>No.</td><td>Model Name</td>
+		<th>No.</th><th>Model Name</th>
 	</tr>
 	{% for model in models %}
 		<tr>

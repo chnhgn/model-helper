@@ -1,8 +1,27 @@
 <html>
 <head>
-<style>
-table{ border-collapse:collapse; }
-td{ border:#ccc solid 1px; padding:5px; }
+<style type="text/css">
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-right: auto;
+    margin-left: true;
+    width: 600px;
+ }
+ th, td
+ {
+    border: 1px solid #b5d6e6;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    height: 30px;
+ }
+ th
+ {
+    background-color: #D8E7FA;
+ }
 </style>
 </head>
 <body>
@@ -11,20 +30,20 @@ td{ border:#ccc solid 1px; padding:5px; }
 {% csrf_token %}
 	<table>
 		<tr>
-			<td>Score Input Table:</td>
+			<th>Score Input Table:</th>
 			<td><input type="text" name="score_input" size="40"></td>
 		</tr>
 		<tr>
-			<td>Score Output Table:</td>
+			<th>Score Output Table:</th>
 			<td><input type="text" name="score_output" size="40"></td>
 		</tr>
 	</table>
 	<br>
-	Please select a model:
 	<table border="0" cellspacing="0" cellpadding="0">
+	  <tr><th width="30%">Please select a model:</th><th></th></tr>
 		{% for model in models %}
 			<tr>
-			 <td><input type="radio" name="model_id" value="{{ model.0 }}" onclick="document.getElementById('selected_model_id').value=this.value)"></td><td>{{ model.1 }}</td>
+			 <td width="30%"><input type="radio" name="model_id" value="{{ model.0 }}" onclick="document.getElementById('selected_model_id').value=this.value)"></td><td>{{ model.1 }}</td>
 			</tr>
 		{% endfor %}
 	</table>

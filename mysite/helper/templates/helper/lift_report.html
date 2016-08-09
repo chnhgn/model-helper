@@ -1,23 +1,42 @@
 <html>
 <head>
-<style>
-table{ border-collapse:collapse; }
-td{ border:#ccc solid 1px; padding:5px; }
+<style type="text/css">
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-right: auto;
+    margin-left: true;
+    width: 600px;
+ }
+ th, td
+ {
+    border: 1px solid #b5d6e6;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    height: 30px;
+ }
+ th
+ {
+    background-color: #D8E7FA;
+ }
 </style>
 </head>
 <body>
 	<form action="{% url 'generateLift' %}" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 		<table>
-			<tr><td>Input Data Source:</td><td><input type="text" name="input_ds" size="40"></td></tr>
-			<tr><td>Training Target Variable:</td><td><input type="text" name="target" size="40"></td></tr>
+			<tr><th>Input Data Source:</th><td><input type="text" name="input_ds" size="40"></td></tr>
+			<tr><th>Training Target Variable:</th><td><input type="text" name="target" size="40"></td></tr>
 		</table>
 		<br>
-		Please select models:
 		<table border="0" cellspacing="0" cellpadding="0">
+			<tr><th width="30%">Please select models:</th><th></th></tr>
 			{% for model in models %}
 				<tr>
-				 <td><input type="checkbox" name="model_list[]" value="{{ model.0 }}"></td><td>{{ model.1 }}</td>
+				 <td width="30%"><input type="checkbox" name="model_list[]" value="{{ model.0 }}"></td><td>{{ model.1 }}</td>
 				</tr>
 			{% endfor %}
 		</table>

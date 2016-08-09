@@ -1,13 +1,43 @@
 <html>
 <head>
+<style type="text/css">
+table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-right: auto;
+    margin-left: true;
+    width: 600px;
+ }
+ th, td
+ {
+    border: 1px solid #b5d6e6;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    height: 30px;
+ }
+ th
+ {
+    background-color: #D8E7FA;
+ }
+</style>
 </head>
 <body>
 	<form action="{% url 'distributeReport' %}" method="post" enctype="multipart/form-data">
 	{% csrf_token %}
-		<select name="reportId">
-			<option value="lift">Lift Report</option>
-		</select>
-		<input type="submit" name="submit" value="Next">
+	<table>
+		<tr><th>Please select a report type:</th><th></th></tr>
+		<tr>
+		<td>
+			<select name="reportId">
+				<option value="lift">Lift Report</option>
+			</select>
+		</td>
+		<td><input type="submit" name="submit" value="Next"></td>
+		</tr>
+	</table>
 	</form>
 </body>
 </html>

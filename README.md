@@ -12,4 +12,7 @@
 	Scoring SAS model
 	Generate Lift(ROC,Lift and Gain) report for models
 	
-	
+## Used Modules
+	pip install sas7bdat
+	pip install django-jquery
+		
